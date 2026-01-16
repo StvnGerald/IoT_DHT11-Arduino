@@ -1,0 +1,4 @@
+Wiring
++ to 5V
+- to GND
+Out to Pin2/D2/Digital pin 2

@@ -14,21 +14,27 @@ void setup() {
 void loop() {
   delay(2000); // Ini jeda refresh data pada layar, muncul tiap 2 detik
 
-  float kelembapan = dht.readHumidity();
+  float humidity = dht.readHumidity();
   float celsius = dht.readTemperature();
-  float fahrenheit = (dht.readTemperature() *9/5) + 32;
+  float fahrenheit = (dht.readTemperature() *9.0/5.0) + 32;
+
 
   // Untuk memeriksa apakah pembacaan data gagal atau berhasil
-  if (isnan(kelembapan) || isnan(celsius) || isnan(fahrenheit)) {
+  if (isnan(humidity) || isnan(celsius) || isnan(fahrenheit)) {
     Serial.println("Gagal membaca dari sensor!");
     return;
   }
 
+  float hif = dht.computeHeatIndex(fahrenheit, humidity);
+
   Serial.print("Kelembapan: ");
-  Serial.print(kelembapan);
+  Serial.print(humidity);
   Serial.print("%  Suhu: ");
   Serial.print(celsius);
   Serial.print("°C  ");
   Serial.print(fahrenheit);
-  Serial.println("°F");
+  Serial.print("°F  ");
+  Serial.print(F("|  Indeks Panas: "));
+  Serial.print(hif);
+  Serial.println(F("°F"));
 }
